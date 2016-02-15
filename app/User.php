@@ -2,10 +2,12 @@
 
 namespace App;
 
+use App\Place as Place;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
+    protected $appends = ['date_human'];
     /**
      * The attributes that are mass assignable.
      *
@@ -32,5 +34,10 @@ class User extends Authenticatable
     public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = bcrypt($value);
+    }
+
+    public function getDateHumanAttribute()
+    {
+        return $this->created_at->diffForHumans() . ' ( ' . date('d M Y', strtotime($this->created_at)) . ' )';
     }
 }
