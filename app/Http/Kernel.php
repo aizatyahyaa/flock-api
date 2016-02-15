@@ -2,7 +2,12 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\Authenticate as Authenticate;
+use App\Http\Middleware\EncryptCookies as EncryptCookies;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
+use Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode as CheckForMaintenanceMode;
+
+// use Illuminate\Cookie\Middleware\EncryptCookies as EncryptCookies;
 
 class Kernel extends HttpKernel
 {
@@ -34,10 +39,6 @@ class Kernel extends HttpKernel
         'api' => [
             'throttle:60,1',
         ],
-
-        'cors' => [
-            \App\Http\Middleware\Cors::class,
-        ],
     ];
 
     /**
@@ -54,6 +55,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'jwt.auth' => \Tymon\JWTAuth\Middleware\GetUserFromToken::class,
         'jwt.refresh' => \Tymon\JWTAuth\Middleware\RefreshToken::class,
-        'cors' => \App\Http\Middleware\Cors::class,
+        // 'cors' => \App\Http\Middleware\Cors::class,
+        'cors' => \Barryvdh\Cors\HandleCors::class,
     ];
 }
